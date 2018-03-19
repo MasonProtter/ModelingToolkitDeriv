@@ -129,3 +129,13 @@ function fastuniq(v)
 end
 
 tagCount = 0
+
+
+#---------------------------------------------------------------
+#---------------------------------------------------------------
+# Dtype
+struct Dtype <: Function end
+const D = Dtype()
+const ∂ = Dtype()
+
+Base.:^(D::Dtype, i::Int) = t -> foldl((x,y)->D(x),t,1:i)
