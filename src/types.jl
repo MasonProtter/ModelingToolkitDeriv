@@ -90,7 +90,6 @@ Base.:(==)(x::Differential,y::Differential) = x.terms == y.terms
 Base.getindex(t::Differential, i::DTag) = (t.terms)[i]
 getTagList(Dx::Differential) = [key for (key, _) in Dx.terms]
 
-Base.getindex(Dx::Differential, i::DTag) = Dx.terms[i]
 
 function Base.getindex(Dx::Differential, i::Int)
     key = getTagList(Dx)[i]
