@@ -32,6 +32,7 @@ julia> D(t -> log(t)^2)(t)
 and avoids perturbation confusion (allowing it to take higher derivatives)
 ```julia
 julia> D(D(f))(t)
+0 + (0 + (2 * (0 + (1 * ((t + 0) + 0) ^ 0) * 1)) * 1)
 
 julia> D(D(x -> log(x)))(t)
 0 + (0 + (0 + (-1 / ((t + 0) + 0) ^ 2) * 1) * 1)
