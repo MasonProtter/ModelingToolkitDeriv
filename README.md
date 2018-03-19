@@ -38,7 +38,7 @@ julia> D(D(g))(t) |> simplify_constants
 -1 / t ^ 2
 ```
 
-Adding new functions to take derivatives of is simple. For instance, currently trig functions are not supported. To support them, simply define methods so they know how to accept `Differential` arguments using the `unaryOp` or `binaryOp` functions respectively
+Adding new functions to take derivatives of is simple. For instance, currently trig functions are not supported. To support them, simply define methods so they know how to accept `Differential` arguments using the `unaryOp` or `binaryOp` functions depending on the arity of the function you wish to take derivatives of.
 
 ```julia
 julia> D(x-> sin(x))(t)
