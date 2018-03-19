@@ -8,34 +8,34 @@ julia> using ModelingToolkit, ModelingToolkitDeriv
 julia> @IVar t; 
 
 julia> f(t) = t^2;
+
+julia> g(t) = log(t);
 ```
 To take the derivative of `f` with repsect to `t`, we simply call the `D` operator on `f` and evaluate the resulting function at a `t` of our choosing
 ```julia
 julia> D(f)(t)
 0 + (2 * (t + 0) ^ 1) * 1
-```
-which after some simplification is equivalent to `2*t`.
 
+julia> ans |> simplify_constants
+2 * t ^ 1
+```
 This system has the product rule and chain rule built in
 
 ```julia
-julia> D(t -> f(t) + t)(t)
-(0 + (2 * (t + 0) ^ 1) * 1) + 1
+julia> D(t -> f(t)*g(t))(t) |> simplify_constants
+t ^ 2 * (1 / t) + (2 * t ^ 1) * log(t)
 
-julia> D(t -> f(t)*t)(t)
-((0 + ((t + 0) ^ 2 + 0) * 1) + (0 + (2 * (t + 0) ^ 1) * 1) * (t + 0)) + 0
-
-julia> D(t -> log(t)^2)(t)
-0 + (2 * (log(t + 0) + 0) ^ 1) * (0 + (1 / (t + 0)) * 1)
+julia> D(t -> g(t)^2)(t) |> simplify_constants
+(2 * log(t) ^ 1) * (1 / t)
 ```
 
 and avoids perturbation confusion (allowing it to take higher derivatives)
 ```julia
-julia> D(D(f))(t)
-0 + (0 + (2 * (0 + (1 * ((t + 0) + 0) ^ 0) * 1)) * 1)
+julia> D(D(f))(t) |> simplify_constants
+2 * t ^ 0
 
-julia> D(D(x -> log(x)))(t)
-0 + (0 + (0 + (-1 / ((t + 0) + 0) ^ 2) * 1) * 1)
+julia> D(D(g))(t) |> simplify_constants
+-1 / t ^ 2
 ```
 
 Adding new functions to take derivatives of is simple. For instance, currently trig functions are not supported. To support them, simply define methods so they know how to accept `Differential` arguments using the `unaryOp` or `binaryOp` functions respectively
