@@ -5,7 +5,7 @@ using DataStructures
 include("types.jl")
 include("calculus.jl")
 
-function Base.:^(x::Union{Variable, Operation}, y::Int) = Operation(^, [x, y])
+Base.:^(x::Union{Variable, Operation}, y::Int) = Operation(^, [x, y])
 
 export D
 
