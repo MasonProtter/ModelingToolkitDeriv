@@ -37,6 +37,16 @@ julia> D(D(f))(t) |> simplify_constants
 julia> D(D(g))(t) |> simplify_constants
 -1 / t ^ 2
 ```
+One can also take expoentials of the derivative operator to specify $n^\mathrm{th}$ order derivatives
+```julia
+julia> (D^2)(f)(t) |> simplify_constants
+2 * t ^ 0
+
+julia> (D^3)(g)(t) |> simplify_constants
+(-1 / (t ^ 2) ^ 2) * (2 * t ^ 1)
+```
+Note: Currently due to a bug I don't understand, D^4 or higher powers seems to hang indefinitely. 
+
 
 Adding new functions to take derivatives of is simple. For instance, currently trig functions are not supported. To support them, simply define methods so they know how to accept `Differential` arguments using the `unaryOp(f, dfdx)` or `binaryOp(f,dfdx,dfdy)` functions depending on the arity of the function you wish to take derivatives of.
 
