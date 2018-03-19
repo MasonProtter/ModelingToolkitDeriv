@@ -11,3 +11,7 @@ D(D(x -> log(x)))(t)
 
 D(t -> 1/t)(t)
 
+D(x-> sin(x))(t)
+
+Base.sin(x::ModelingToolkitDeriv.Differential) = ModelingToolkitDeriv.unaryOp(sin, cos)(x)
+

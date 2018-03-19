@@ -7,7 +7,7 @@ include("calculus.jl")
 
 Base.:^(x::Union{Variable, Operation}, y::Int) = Operation(^, [x, y])
 
-export D
+export D, unaryOp, binaryOp, Differential
 
 end
 
