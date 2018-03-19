@@ -101,9 +101,11 @@ function extractDiff(Dx::Differential, ϵ::Differential)
         out
     end
 end
-extractDiff(ex::Expr, ϵ::Differential) = 0
+extractDiff(ex::Operation, ϵ::Differential) = 0
 
 function D(f::Function)
     ϵ = makeDiff()
     x -> extractDiff(f(x + ϵ), ϵ)
 end
+
+Operation(*, [1,2])
