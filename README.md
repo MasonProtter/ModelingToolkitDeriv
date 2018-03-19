@@ -38,4 +38,15 @@ julia> D(D(x -> log(x)))(t)
 0 + (0 + (0 + (-1 / ((t + 0) + 0) ^ 2) * 1) * 1)
 ```
 
+Adding new functions to take derivatives of is simple. For instance, currently trig functions are not supported. To support them, simply define methods so they know how to accept `Differential` arguments using the `unaryOp` or `binaryOp` functions respectively
+
+```julia
+julia> D(x-> sin(x))(t)
+ERROR: MethodError: no method matching sin(::ModelingToolkitDeriv.Differential)
+
+julia> Base.sin(x::Differential) = unaryOp(sin, cos)(x)
+
+julia> D(x-> sin(x))(t)
+0 + cos(t + 0) * 1)(x)
+```
 
